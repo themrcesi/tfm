@@ -254,8 +254,8 @@ class Searcher():
         self.dictionary = indexer.dictionary
         self.model = models.TfidfModel(self.bow)
         self.index = Similarity(None, corpus = indexer.bow, num_features = len(indexer.dictionary))
-        self.pipeline_eng = LemmatizerTagger("es_dep_news_trf", Tokenizer(SymbolRemover()))
-        self.pipeline_esp = LemmatizerTagger("en_core_web_trf", Tokenizer(SymbolRemover()))
+        self.pipeline_esp = LemmatizerTagger("es_dep_news_trf", Tokenizer(SymbolRemover()))
+        self.pipeline_eng = LemmatizerTagger("en_core_web_trf", Tokenizer(SymbolRemover()))
         self.traductor = Translator()
         self.documents = indexer.repository
     
@@ -265,6 +265,7 @@ class Searcher():
         """
         if lang == "eng":
             pq = self.traductor.translate(self.pipeline_eng.execute(query))
+            pq = [token for item in pq for token in item.split()]
         elif lang == "esp":
             pq = [token["lemma"] for token in self.pipeline_esp.execute(query)]
                         
@@ -275,7 +276,7 @@ class Searcher():
 
         returned = [
             {
-                "document": self.documents[doc].replace("\n", ""), 
+                "document": self.documents[doc].replace("\n", " "), 
                 "score": "%.3f" % round(score,3)
             } for doc, score in ranking[:3] if score > 0
         ]

@@ -19,7 +19,6 @@ def create_book(query: str, language: str):
 # -*- coding: utf-8 -*-
 from flask import Flask, request
 from flask_cors import CORS
-import requests
 from searcher import Searcher, Indexer
 import json
 

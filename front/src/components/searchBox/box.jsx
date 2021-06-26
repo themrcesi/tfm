@@ -1,11 +1,11 @@
 import React from "react";
 import "./box.css";
 import { useState } from "react";
-import { connect } from "react-redux";
-import {search} from "../../store/questionActions";
 
-export function Box(props) {
+export default function Box(props) {
   const [query, setQuery] = useState("");
+
+  const {setResults} = props;
 
   const handleChangeQuery = (event) => {
     setQuery(event.target.value);
@@ -17,11 +17,13 @@ export function Box(props) {
     setLanguage(event.target.value);
   };
 
-  const {search} = props
-
-  const clickButton = () => { 
-      search(language, query)
+  const search = () => {
+    fetch("http://backend:6969/queries?query="+query+"&language="+language)
+    .then(response => response.json())
+    .then(data => {
+      setResults(data);
       setQuery("");
+    });
   };
 
   return (
@@ -39,17 +41,9 @@ export function Box(props) {
           Español
         </option>
       </select>
-      <button type="submit" onClick={clickButton}>
+      <button type="submit" onClick = {search}>
         <i className="fa fa-search"></i>
       </button>
     </div>
   );
 }
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-      search: (language, query) => dispatch(search(language, query)),
-    };
-  };
-
-export default connect(null, mapDispatchToProps)(Box);

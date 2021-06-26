@@ -5,5 +5,12 @@ services:
       context: ./api
     image: backend
     ports:
-      - 6969:8000
+      - 6969:6969
+  front:
+    build: 
+      context: ./front
+    image: frontend
+    ports:
+      - 3000:3000
+
     

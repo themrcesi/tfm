@@ -1,21 +1,13 @@
 import React from "react";
-import { connect } from "react-redux";
 import "./resultsList.css"
+import Result from "../result/result"
 
-export function ResultsList(props) {
-  const results = ["hola", "adiós", "hola", "hola"];
+export default function ResultsList(props) {
+  const {results} = props;
 
-  const toShow = results.map((result) => {
-    return <div>{result}</div>;
+  const toShow = results.map((result, key) => {
+    return <Result text = {result.document} key = {key} number = {key}/>;
   });
 
   return <div className="row">{toShow}</div>;
 }
-
-const mapStateToProps = (state) => {
-  return {
-    results: state.results,
-  };
-};
-
-export default connect(mapStateToProps, null)(ResultsList);
