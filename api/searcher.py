@@ -110,7 +110,7 @@ class LemmatizerTagger():
 
 class Eng2UNLTranslator():
     
-    def __init__(self, file = "resources/eng2unl.pickle"):
+    def __init__(self, file = "resources/eng2unl_ref.pickle"):
         with open(file, "rb") as f:
             self.dic = pickle.load(f)
             
@@ -161,7 +161,7 @@ class Eng2UNLTranslator():
 
 class UNL2EspTranslator():
     
-    def __init__(self, file = "resources/unl2esp.pickle"):
+    def __init__(self, file = "resources/unl2esp_ref.pickle"):
         with open(file, "rb") as f:
             self.dic = pickle.load(f)
             
@@ -275,9 +275,9 @@ class Searcher():
 
         returned = [
             {
-                "document": self.documents[doc], 
+                "document": self.documents[doc].replace("\n", ""), 
                 "score": "%.3f" % round(score,3)
-            } for doc, score in ranking if score > 0
+            } for doc, score in ranking[:3] if score > 0
         ]
 
-        return returned
+        return returned if returned else []
