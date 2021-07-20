@@ -18,11 +18,11 @@ export default function Box(props) {
   };
 
   const search = () => {
-    fetch("http://backend:6969/queries?query="+query+"&language="+language)
+    fetch("http://localhost:6969/queries?query="+query+"&language="+language)
     .then(response => response.json())
     .then(data => {
       setResults(data);
-      setQuery("");
+      /*setQuery("");*/
     });
   };
 

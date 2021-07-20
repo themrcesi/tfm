@@ -1,12 +1,7 @@
-import json
-import os
-from nltk.corpus import stopwords
-from nltk.tokenize import wordpunct_tokenize
-from nltk.stem import PorterStemmer
 from joblib import Parallel, delayed
 from gensim import corpora
 from gensim import models
-from gensim.similarities import MatrixSimilarity, SparseMatrixSimilarity, Similarity
+from gensim.similarities import Similarity
 from operator import itemgetter
 import glob
 import re
@@ -276,9 +271,18 @@ class Searcher():
 
         returned = [
             {
-                "document": self.documents[doc].replace("\n", " "), 
+                "document": self._bold(self.documents[doc].replace("\n", " "), query), 
                 "score": "%.3f" % round(score,3)
             } for doc, score in ranking[:3] if score > 0
         ]
 
         return returned if returned else []
+
+    def _bold(self, text, query):
+        if re.match(query, text, re.IGNORECASE|re.DOTALL):
+            print(1)
+            text = re.sub(query, f"<b>{query} </b>", text, re.DOTALL|re.IGNORECASE)
+        elif re.match(query[:-1], text, re.IGNORECASE|re.DOTALL):
+            print(2)
+            text = re.sub(query[:-1], f"<b>{query[:-1]} </b>", text, re.DOTALL|re.IGNORECASE)
+        return text

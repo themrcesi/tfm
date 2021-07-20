@@ -20,16 +20,12 @@ RUN apt-get install -y python3-pip python3-dev \
 RUN apt-get install libfreetype6-dev -y
 RUN apt-get install pkg-config -y
 
-RUN pip install gensim
-RUN pip install spacy
+RUN pip install gensim spacy nltk joblib flask flask-cors
 RUN python -m spacy download en_core_web_trf
 RUN python -m spacy download es_dep_news_trf
-RUN pip install nltk
-RUN pip install joblib
-RUN pip install flask flask-cors
 
 COPY . /app
 
 WORKDIR /app
 
-CMD ["python", "app.py"]
+CMD python app.py
