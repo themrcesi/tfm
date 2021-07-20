@@ -8,4 +8,4 @@ En la rama [experimentation](https://github.com/themrcesi/tfm/tree/experimentati
 
 En la rama [presentation](), se puede encontrar el código de la demo realizada en la presentación con una mínima interfaz web y una API en Python encargada de devolver una lista de documentos dada una consulta del usuario.
 
-Finalmente, las diapositivas de la presentación las pueden encontrar en esta misma rama bajo el nombre ``presentacion.ppt``.
+Finalmente, las diapositivas de la presentación las pueden encontrar en esta misma rama bajo el nombre ``presentacion.pdf``.
